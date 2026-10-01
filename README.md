@@ -61,7 +61,8 @@ The source-availability statement describes the confidentiality boundary; it doe
 
 ## Links
 
-- Portfolio case study: pending website publication; planned route `/work/lolpul-vpn`.
+- [Portfolio](https://elisey.kochura.com).
+- [Portfolio case study](https://elisey.kochura.com/work/lolpul-vpn).
 - [Elisey Kochura on GitHub](https://github.com/lolpul).
 
 *Documentation reviewed: 1 October 2026.*
