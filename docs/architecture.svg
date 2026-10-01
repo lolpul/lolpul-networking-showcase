@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="480" viewBox="0 0 900 480" role="img" aria-labelledby="title desc">
+  <title id="title">Lolpul Networking — conceptual architecture</title>
+  <desc id="desc">High-level software responsibilities only. No deployment topology, addresses or private interfaces.</desc>
+  <rect width="900" height="480" rx="12" fill="#101311"/>
+  <g font-family="Arial, sans-serif">
+    <text x="40" y="53" fill="#edf0e7" font-size="25">Lolpul Networking</text>
+    <text x="40" y="82" fill="#a7b09f" font-size="11" letter-spacing="1.5">EXPERIMENTAL NETWORKING / SOFTWARE BOUNDARIES</text>
+    <rect x="40" y="137" width="230" height="120" rx="5" fill="#192018" stroke="#839670"/>
+    <text x="60" y="169" fill="#b9d795" font-size="10">01</text>
+    <text x="60" y="202" fill="#edf0e7" font-size="18">Application boundary</text>
+    <text x="60" y="229" fill="#a7b09f" font-size="10">User-facing operations</text>
+    <rect x="335" y="137" width="230" height="120" rx="5" fill="#192018" stroke="#839670"/>
+    <text x="355" y="169" fill="#b9d795" font-size="10">02</text>
+    <text x="355" y="202" fill="#edf0e7" font-size="18">Shared networking core</text>
+    <text x="355" y="229" fill="#a7b09f" font-size="10">Common lifecycle responsibilities</text>
+    <rect x="630" y="137" width="230" height="120" rx="5" fill="#192018" stroke="#839670"/>
+    <text x="650" y="169" fill="#b9d795" font-size="10">03</text>
+    <text x="650" y="202" fill="#edf0e7" font-size="18">Service boundary</text>
+    <text x="650" y="229" fill="#a7b09f" font-size="10">Service-side coordination</text>
+    <path d="M270 197h56m-7-5 7 5-7 5M565 197h56m-7-5 7 5-7 5" fill="none" stroke="#b9d795"/>
+    <path d="M450 257v55" fill="none" stroke="#728662" stroke-dasharray="4 5"/>
+    <rect x="170" y="312" width="560" height="79" rx="5" fill="#141b14" stroke="#46543e"/>
+    <text x="450" y="345" fill="#edf0e7" font-size="17" text-anchor="middle">Transport abstractions</text>
+    <text x="450" y="368" fill="#a7b09f" font-size="11" text-anchor="middle">Concrete mechanisms remain behind contracts</text>
+    <path d="M40 425h820" stroke="#35412f"/>
+    <text x="40" y="449" fill="#a7b09f" font-size="11">Conceptual responsibilities · not a deployment map</text>
+  </g>
+</svg>
