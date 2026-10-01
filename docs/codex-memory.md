@@ -1,4 +1,4 @@
-# Showcase documentation memory — v2
+# Showcase documentation memory — v3
 
 - Purpose: public engineering overview of Lolpul Networking, with independently written prose and a conceptual diagram.
 - Canonical content: [README](../README.md) and [architecture illustration](architecture.svg).
@@ -11,3 +11,7 @@
 - Maintenance: keep claims tied to confirmed project evidence, preserve the private-source boundary and review future changes before push.
 - Record: [initial overview](patches/2026-10-01-public-overview.md).
 - Update: [published portfolio links](patches/2026-10-01-portfolio-links.md).
+
+- Profile integration: README opens with a one-line summary and public backlinks; explicit Stack and Current status sections. Repository description/homepage/topics are recorded in `repository-metadata.json`.
+- Profile: https://github.com/lolpul; original source remains private.
+- Latest patch: [public profile coherence](patches/2026-10-01-profile-coherence.md).

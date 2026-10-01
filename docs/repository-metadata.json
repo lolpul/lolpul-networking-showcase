@@ -1,0 +1,12 @@
+{
+  "description": "Public engineering overview of experimental backend, Linux and distributed networking work.",
+  "homepage": "https://elisey.kochura.com/work/lolpul-vpn",
+  "topics": [
+    "networking",
+    "linux",
+    "backend",
+    "distributed-systems",
+    "go",
+    "infrastructure"
+  ]
+}

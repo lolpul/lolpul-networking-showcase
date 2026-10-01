@@ -1,9 +1,12 @@
-# Lolpul Networking
+# Networking Systems
 
-**Networking / Backend / Linux infrastructure / R&D**
+Experimental Go networking systems with explicit contracts and controlled Linux lab verification.
+
+[Portfolio case study](https://elisey.kochura.com/work/lolpul-vpn) · [Portfolio](https://elisey.kochura.com)
+
 An engineering overview by [Elisey Kochura](https://github.com/lolpul).
 
-## Project overview
+## Overview
 
 Lolpul Networking is an experimental project exploring a common software foundation for services that use different network transports. The engineering focus is on clear contracts between application behavior, connection/session handling and transport-specific components.
 
@@ -52,6 +55,14 @@ The private project contains contract tests, lifecycle tests and controlled Linu
 ## Screenshots
 
 No screenshots are included in this edition. A conceptual architecture diagram is used instead of an invented application UI or a private operational dashboard.
+
+## Stack
+
+Go · Linux · Docker · Networking
+
+## Current status
+
+Experimental R&D with controlled lab validation; not a released consumer VPN or production network.
 
 ## Source availability
 
