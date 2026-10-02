@@ -22,3 +22,7 @@ Automatic inventory scan and manual review found no confidential values, private
 ## Rollback and limits
 
 Original main: `4c3bb6873b9f43cee9d0df4df70ebfc893fc11d0`. A timestamped ignored backup includes a target manifest for the README, memory, metadata, and Obsidian note. Revert the new public commit for rollback; do not rewrite history. Cooperative workers and terminating closers are assumptions. Host tests do not validate the private network stack, external cleanup guarantees, or production behavior. No hardware, service, network configuration, or private repository was changed.
+
+## Publication acceptance
+
+Implementation `83de2a619133b0f318df16bc9e5e74affafb4a12` pushed to public main. [Actions 37048917736](https://github.com/lolpul/lolpul-networking-showcase/actions/runs/37048917736) succeeded, including Linux `go test -race -timeout 30s ./...`. Windows tests/vet and Git whitespace checks also pass. No badge was added before validation. Local Linux toolchain download is supplementary, not the source of this CI result.
