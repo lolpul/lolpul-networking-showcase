@@ -1,17 +1,13 @@
-# Showcase documentation memory — v3
+# Networking showcase memory - v4
 
-- Purpose: public engineering overview of Lolpul Networking, with independently written prose and a conceptual diagram.
-- Canonical content: [README](../README.md) and [architecture illustration](architecture.svg).
-- Scope: documentation only. Application source and operational configuration remain private.
-- Stage constraint: Experimental networking foundation; do not describe it as a released production VPN.
-- Publication checks: review every tracked file; permit only this documentation set; check for sensitive values, private URLs, identifying user data, source code and infrastructure details.
-- Screenshots: none included or cleared for this edition.
-- Links: portfolio and case study are published and verified over trusted HTTPS; README now links to both.
-- Last verified: homepage and case study HTTP 200 on 2026-10-01; links added only after publication. No product source or operational information added.
-- Maintenance: keep claims tied to confirmed project evidence, preserve the private-source boundary and review future changes before push.
-- Record: [initial overview](patches/2026-10-01-public-overview.md).
-- Update: [published portfolio links](patches/2026-10-01-portfolio-links.md).
-
-- Profile integration: README opens with a one-line summary and public backlinks; explicit Stack and Current status sections. Repository description/homepage/topics are recorded in `repository-metadata.json`.
-- Profile: https://github.com/lolpul; original source remains private.
-- Latest patch: [public profile coherence](patches/2026-10-01-profile-coherence.md).
+- Purpose: independent public Go lifecycle examples plus a conceptual experimental networking overview.
+- Repository: https://github.com/lolpul/lolpul-networking-showcase; private product remains private.
+- Entry points: examples/session-lifecycle/writer.go, examples/cancellation/task.go, examples/resource-cleanup/scope.go; corresponding tests.
+- Architecture: serial writer owner, cooperative task with cancel/join, scoped two-resource acquisition. Standard library only; no real networking.
+- Contract limits: workers cooperate; writer/Close terminate and do not reenter; non-nil interface dependencies; failed close attempted once without retry.
+- Commands: gofmt -l examples; go vet ./...; go test -timeout 30s ./...; go test -race -timeout 30s ./.... CI .github/workflows/go.yml pins Go 1.26.4.
+- Audit: only generic contracts, ownership, cancellation, concurrency, and failure-test concepts selected. No source/history/config transferred; private receipts and backups are ignored.
+- Validation: Windows Go host tests and vet passed; Linux race verification and publication acceptance are pending.
+- Active step: finish race, automatic/manual confidentiality review, commit/push, and confirm exact-revision Actions before starting the next showcase.
+- Documents: [scope](spec.md), [interview notes](interview-notes.md), [patch](patches/2026-10-02-go-examples.md).
+- Portfolio: https://elisey.kochura.com/work/lolpul-vpn. Site code evidence follows after all three showcases are published.

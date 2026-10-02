@@ -1,79 +1,63 @@
 # Networking Systems
 
-Experimental Go networking systems with explicit contracts and controlled Linux lab verification.
+Three small Go examples of cancellation, lifecycle coordination, and resource ownership, alongside a conceptual overview of an experimental networking project.
 
-[Portfolio case study](https://elisey.kochura.com/work/lolpul-vpn) · [Portfolio](https://elisey.kochura.com)
+## What this demonstrates
 
-An engineering overview by [Elisey Kochura](https://github.com/lolpul).
-
-## Overview
-
-Lolpul Networking is an experimental project exploring a common software foundation for services that use different network transports. The engineering focus is on clear contracts between application behavior, connection/session handling and transport-specific components.
-
-**Stage:** experimental networking foundation with controlled lab validation. This overview does not describe a released consumer VPN service or a production network.
-
-The underlying problem is architectural: adding a different connection mechanism should not require rebuilding the application's entire networking stack or duplicating its lifecycle handling.
-
-## My role
-
-I work on the shared Go networking foundation, component contracts, transport integration, service boundaries and verification tooling. The work includes Linux-based test environments and the lifecycle and cleanup behavior needed to reason about distributed components.
-
-## Engineering scope
-
-- Go networking and backend components.
-- Application, session and transport boundaries.
-- Service/gateway and adapter integration at a conceptual level.
-- Linux and Docker-based controlled test environments.
-- Contract tests, fault handling, cancellation and resource lifecycle checks.
-- Reproducible verification and deployment-oriented engineering practices.
+- An explicit `io.WriteCloser` ownership boundary and serialized lifecycle operations.
+- Cooperative context cancellation followed by joining a worker goroutine.
+- Reverse-order cleanup after partial acquisition, with operation and cleanup errors preserved.
+- Deterministic channel-based tests and concurrent access checked with Go's race detector.
 
 ## Architecture
 
-![Conceptual application boundary, shared networking foundation and service-side responsibilities](docs/architecture.svg)
+The private experimental project separates application behavior, logical sessions, and concrete transports. This public repository demonstrates generic lifecycle concerns without implementing that network stack.
 
-Applications interact with a common networking foundation. Transport-specific components sit behind defined contracts, with service-side components completing the interaction. The illustration shows software responsibilities, not server locations, a production node inventory or a network configuration.
+![Conceptual software responsibilities](docs/architecture.svg)
+
+The examples are independent packages: a writer session owns one writer; a task owns one worker; a scoped operation owns two temporary resources. Their tests use synthetic in-process dependencies. There is no network connection or provider integration.
+
+## Code examples
+
+| Example | Start reading | Contract |
+| --- | --- | --- |
+| Session lifecycle | [writer.go](examples/session-lifecycle/writer.go) | The caller transfers ownership; writes serialize; close waits for an active write and runs once. |
+| Cancellation | [task.go](examples/cancellation/task.go) | Work honors context cancellation; `Stop` cancels and joins; all waiters observe the same result. |
+| Resource cleanup | [scope.go](examples/resource-cleanup/scope.go) | Each acquired resource is closed once, including resource-plus-error returns; cleanup unwinds in reverse order. |
 
 ## Engineering decisions
 
-| Problem | Decision | Reason / trade-off |
-| --- | --- | --- |
-| Platform applications can otherwise duplicate connection logic. | Put common networking behavior in a shared Go foundation with a narrow application boundary. | Reuse lifecycle handling and tests; platform integration still needs deliberate adapter work. |
-| One transport's behavior can spread through the rest of the system. | Separate logical session responsibilities from concrete transport components. | Make boundaries explicit and support different implementations; lifecycle ownership becomes a first-class design concern. |
-| Integration success alone does not establish predictable failure behavior. | Use contract tests and controlled containerized labs alongside component tests. | Exercise failure and cleanup paths reproducibly; lab results are not a claim about every real-world network. |
+A mutex protects the writer operation and its lifetime together, avoiding a close/write race at the cost of blocking other calls during a write. A task uses channel closure to publish its result after cleanup; cancellation by itself does not establish that the worker has exited. Scoped acquisition uses `defer` and `errors.Join` so a cleanup error does not erase the original failure.
 
-## Challenges
+These APIs were written independently for the public examples. They are intentionally smaller and different from the private project's contracts. See [interview notes](docs/interview-notes.md) for alternatives and trade-offs, and [the scope specification](docs/spec.md) for acceptance criteria.
 
-- Keeping component interfaces stable while implementations evolve.
-- Making cancellation, timeouts and cleanup consistent across asynchronous operations.
-- Separating component health from the state of an individual connection.
-- Distinguishing observations from controlled tests from assumptions about production environments.
+## Failure handling
 
-## Validation approach
+A failed close is retained rather than retried. Writing after shutdown is rejected. A short write becomes `io.ErrShortWrite`. Expired work is not started. Acquisition failures still release any resource returned alongside the error. Cancellation between acquisition steps skips further work and releases owned resources.
 
-The private project contains contract tests, lifecycle tests and controlled Linux/Docker lab verification. The public overview describes that engineering approach without publishing test infrastructure, protocol internals, provider integration recipes or operating parameters.
+## Tests
 
-## Screenshots
+With Go 1.26.4:
 
-No screenshots are included in this edition. A conceptual architecture diagram is used instead of an invented application UI or a private operational dashboard.
+```sh
+gofmt -l examples
+go vet ./...
+go test -timeout 30s ./...
+go test -race -timeout 30s ./...
+```
 
-## Stack
+[GitHub Actions](https://github.com/lolpul/lolpul-networking-showcase/actions/workflows/go.yml) runs formatting, vet, host tests, and race tests on Linux. Tests cover success, worker failure, parent cancellation, an expired deadline, repeated/concurrent shutdown, write/close coordination, partial acquisition failures, cleanup ordering, missing resources, and joined errors. No sleeps are used. These are public example tests, not a rerun of private lab verification.
 
-Go · Linux · Docker · Networking
+## Limitations
 
-## Current status
+Cancellation is cooperative; a context cannot kill blocking code. `Wait` and `Stop` can wait indefinitely for an uncooperative worker. Writer methods and closers must return and must not reenter their owner. The examples require constructed instances and non-nil interfaces (including no typed nil). Close failures do not prove that an external resource was released; tests establish attempted cleanup and fake ownership counts. There is no protocol, routing, reconnect, delivery, security, or production guarantee.
 
-Experimental R&D with controlled lab validation; not a released consumer VPN or production network.
+## Relation to private project
 
-## Source availability
+These are independently prepared public engineering examples based on generic lifecycle and networking concerns explored in a private experimental project. They do not expose private transports, provider integrations, operational configuration, internal naming, or private Git history. No private source file was transferred. The private project remains experimental; its controlled lab work is distinct from these host tests.
 
-The production source code is maintained in a private repository. This repository contains a public engineering overview only.
+Prepared with AI assistance, with explicit contracts, reviewed scope, and reproducible tests. No license to the private project is granted.
 
-The source-availability statement describes the confidentiality boundary; it does not imply that this experimental project is a released production service. Application code, protocol internals, private integrations, credentials and infrastructure configuration remain outside this repository. No license to the private product is granted.
+## Portfolio
 
-## Links
-
-- [Portfolio](https://elisey.kochura.com).
-- [Portfolio case study](https://elisey.kochura.com/work/lolpul-vpn).
-- [Elisey Kochura on GitHub](https://github.com/lolpul).
-
-*Documentation reviewed: 1 October 2026.*
+[Engineering case study](https://elisey.kochura.com/work/lolpul-vpn) | [Portfolio](https://elisey.kochura.com) | [Elisey Kochura on GitHub](https://github.com/lolpul)

@@ -1,5 +1,5 @@
 {
-  "description": "Public engineering overview of experimental backend, Linux and distributed networking work.",
+  "description": "Independent Go cancellation, lifecycle and resource-ownership examples with tests and Linux race CI.",
   "homepage": "https://elisey.kochura.com/work/lolpul-vpn",
   "topics": [
     "networking",
