@@ -1,13 +1,14 @@
-# Networking showcase memory - v4
+# Project memory — v5, 2026-10-10
 
-- Purpose: independent public Go lifecycle examples plus a conceptual experimental networking overview.
-- Repository: https://github.com/lolpul/lolpul-networking-showcase; private product remains private.
-- Entry points: examples/session-lifecycle/writer.go, examples/cancellation/task.go, examples/resource-cleanup/scope.go; corresponding tests.
-- Architecture: serial writer owner, cooperative task with cancel/join, scoped two-resource acquisition. Standard library only; no real networking.
-- Contract limits: workers cooperate; writer/Close terminate and do not reenter; non-nil interface dependencies; failed close attempted once without retry.
-- Commands: gofmt -l examples; go vet ./...; go test -timeout 30s ./...; go test -race -timeout 30s ./.... CI .github/workflows/go.yml pins Go 1.26.4.
-- Audit: only generic contracts, ownership, cancellation, concurrency, and failure-test concepts selected. No source/history/config transferred; private receipts and backups are ignored.
-- Validation: Windows Go 1.26.4 tests/vet pass; Linux formatting/vet/tests/race pass in [Actions 37048917736](https://github.com/lolpul/lolpul-networking-showcase/actions/runs/37048917736) for implementation 83de2a619133b0f318df16bc9e5e74affafb4a12.
-- Active step: public examples accepted; automated inventory and manual confidentiality review passed. Next: Python showcase, then Kotlin, profile, and portfolio code evidence.
-- Documents: [scope](spec.md), [interview notes](interview-notes.md), [patch](patches/2026-10-02-go-examples.md).
-- Portfolio: https://elisey.kochura.com/work/lolpul-vpn. Site code evidence follows after all three showcases are published.
+- Purpose: Independent Go cancellation/join, writer lifecycle and partial-acquisition cleanup.
+- Repository: https://github.com/lolpul/lolpul-networking-showcase, PUBLIC, main; review branch portfolio-review-2026-10-10. Use git log/PR for delivery SHA.
+- Entry: README Review in 30 seconds → key implementation files/tests; existing architecture and deeper decisions retained.
+- Run/test commands: README and [dated verification](verification.md), checked during this review.
+- Verified: Go fmt/vet/unit tests and Linux race passed; no real transport or benchmark.
+- Limits: No product protocol, network runtime, failover or performance guarantee; adapters must terminate.
+- Changes: review navigation, honest maturity/validation wording, reproducible demonstration notes and this compact memory. Application algorithms/tests/workflows unchanged; 3D package description corrected to MVP.
+- Existing public portfolio integration was accepted 2026-10-02; no site deployment or production/network change in this review.
+- IP: no private original files/history, configuration, identifiers or working data transferred. New code/visibility/license/history changes require separate owner decision.
+- Backup: central ignored career-materials/.backups/github-review-20261010-015431 manifest; published-doc rollback via ordinary revert; unrelated files preserved.
+- Next: use these source/test paths for interviews; address documented integration/security/rights gaps through separate scoped work.
+- Patch: [portfolio review](patches/2026-10-10-portfolio-review.md).

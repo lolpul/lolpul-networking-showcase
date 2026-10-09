@@ -2,6 +2,10 @@
 
 Three small Go examples of cancellation, lifecycle coordination, and resource ownership, alongside a conceptual overview of an experimental networking project.
 
+## Review in 30 seconds
+
+The engineering question is when an owner can safely call work finished. Read [cancel and join](examples/cancellation/task.go), [serial writer lifecycle](examples/session-lifecycle/writer.go) and [partial-acquisition cleanup](examples/resource-cleanup/scope.go). Corresponding `*_test.go` files exercise ownership and failure boundaries. [Latest verification](docs/verification.md) distinguishes host/race results from networking claims.
+
 ## What this demonstrates
 
 - An explicit `io.WriteCloser` ownership boundary and serialized lifecycle operations.
